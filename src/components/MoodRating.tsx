@@ -9,7 +9,7 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied'
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined'
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied'
 
-const moods = {
+const moods: Record<number, React.ReactNode> = {
   1: <SentimentVeryDissatisfiedIcon />,
   2: <SentimentDissatisfiedIcon />,
   3: <SentimentSatisfiedIcon />,
@@ -17,14 +17,14 @@ const moods = {
   5: <SentimentVerySatisfiedIcon />,
 }
 
-const MoodsContainer = ({ value, ...rest }) => (
+const MoodsContainer = ({ value, ...rest }: { value: number }) => (
   <Box margin={1} {...rest}>{moods[value]}</Box>
 )
 
-const MoodRating = ({ label }) => {
+const MoodRating = ({ ask }: { ask: string }) => {
   return (
     <fieldset>
-      <Typography component="legend">{label}</Typography>
+      <Typography component="legend">{ask}</Typography>
       <Box textAlign="center">
         <Rating
           name="mood-rating"
