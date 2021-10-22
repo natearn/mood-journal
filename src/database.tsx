@@ -6,7 +6,7 @@ export type Survey = {
   questions: Array<Question>
 }
 
-export type Answer = [string,string]
+export type Answer = string
 export type Response = {
   id?: number
   survey: number
@@ -25,9 +25,8 @@ interface Schema extends DBSchema {
   }
 }
 
-// This will overwrite whatever was at (id: 1)
 const seed = async (db: IDBPDatabase<Schema>) => {
-  await db.put('surveys', { questions: ["How do you feel about today?"] }, 1)
+  await db.add('surveys', { questions: ["How do you feel about today?"], id: 1 })
   return db
 }
 
@@ -44,4 +43,5 @@ export const open = () => openDB<Schema>('mood-joural', 1, {
 export const addSurvey = (s: Survey) => open().then(db => db.add('surveys', s))
 export const addResponse = (r: Response) => open().then(db => db.add('responses', r))
 export const getAllSurveys = () => open().then(db => db.getAll('surveys'))
-export const getSurvey = (id: number) => open().then(db => db.get('surveys', id))
+export const getSurvey = (sid: number) => open().then(db => db.get('surveys', sid))
+export const getSurveyResponses = (sid: number) => open().then(db => db.getAllFromIndex('responses', 'survey-id', IDBKeyRange.only(sid)))
