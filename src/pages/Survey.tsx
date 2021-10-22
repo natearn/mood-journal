@@ -3,34 +3,16 @@ import { RouteComponentProps } from '@reach/router'
 import Container from '@mui/material/Container'
 import MoodRating from 'components/MoodRating'
 
-// TODO: refresh on using enum types in typescript
-
-type Question = {
-  type: string
-  ask: string
-  options?: string[]
-}
-
-// XXX: this is dummy data until we get a db going
-
-const questions = [
-  { type: 'mood', ask: "How do you feel today?" },
-]
-
-const Field = (question: Question) => {
-  switch (question.type) {
-    case 'mood':
-      return <MoodRating {...question} key={question.ask} />
-    default:
-      return null
-  }
-}
+import { useSurvey } from 'queries/useSurvey'
 
 const Survey = (props: RouteComponentProps) => {
+  const { data: survey } = useSurvey()
   return (
     <Container maxWidth="md">
       <form>
-        {questions.map(Field)}
+        {survey?.questions.map((q) => (
+          <MoodRating ask={q} key={q} />
+        ))}
       </form>
     </Container>
   )
