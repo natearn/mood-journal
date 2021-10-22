@@ -1,8 +1,13 @@
 import Pages from 'pages'
+import { QueryClient, QueryClientProvider } from 'react-query'
+
+const client = new QueryClient()
 
 const App = () => {
   return (
-    <Pages />
+    <QueryClientProvider client={client}>
+      <Pages />
+    </QueryClientProvider>
   )
 }
 
