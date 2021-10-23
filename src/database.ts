@@ -1,12 +1,23 @@
-import { openDB, DBSchema, IDBPDatabase } from 'idb'
+import { openDB, DBSchema } from 'idb'
 
-export type Question = string
+export enum QuestionType {
+  YesNo = "YesNo",
+  Mood = "Mood",
+}
+
+export type Question =
+  | { kind: QuestionType.YesNo, ask: string }
+  | { kind: QuestionType.Mood, ask: string }
+
+export type Answer =
+  | { kind: QuestionType.YesNo, answer: boolean }
+  | { kind: QuestionType.Mood, answer: number }
+
 export type Survey = {
   id?: number
   questions: Array<Question>
 }
 
-export type Answer = string
 export type Response = {
   id?: number
   survey: number
@@ -25,11 +36,6 @@ interface Schema extends DBSchema {
   }
 }
 
-const seed = async (db: IDBPDatabase<Schema>) => {
-  await db.add('surveys', { questions: ["How do you feel about today?"], id: 1 })
-  return db
-}
-
 export const open = () => openDB<Schema>('mood-joural', 1, {
   upgrade(db, oldVersion) {
     if (oldVersion < 1) {
@@ -38,7 +44,7 @@ export const open = () => openDB<Schema>('mood-joural', 1, {
       responses.createIndex('survey-id','survey')
     }
   }
-}).then(seed)
+})
 
 export const addSurvey = (s: Survey) => open().then(db => db.add('surveys', s))
 export const addResponse = (r: Response) => open().then(db => db.add('responses', r))
