@@ -1,7 +1,6 @@
 import React from 'react'
 import Rating from '@mui/material/Rating'
 import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box';
 
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied'
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'
@@ -18,20 +17,18 @@ const moods: Record<number, React.ReactNode> = {
 }
 
 const MoodsContainer = ({ value, ...rest }: { value: number }) => (
-  <Box margin={1} {...rest}>{moods[value]}</Box>
+  <span {...rest}>{moods[value]}</span>
 )
 
 const MoodRating = ({ ask }: { ask: string }) => {
   return (
     <fieldset>
       <Typography component="legend">{ask}</Typography>
-      <Box textAlign="center">
-        <Rating
-          name="mood-rating"
-          IconContainerComponent={MoodsContainer}
-          highlightSelectedOnly
-        />
-      </Box>
+      <Rating
+        name="mood-rating"
+        IconContainerComponent={MoodsContainer}
+        highlightSelectedOnly
+      />
     </fieldset>
   )
 }
