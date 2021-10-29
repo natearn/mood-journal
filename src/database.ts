@@ -15,6 +15,7 @@ export type Answer =
 
 export type Survey = {
   id?: number
+  name: string
   questions: Array<Question>
 }
 
