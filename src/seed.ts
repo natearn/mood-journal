@@ -4,6 +4,7 @@ import { open, QuestionType } from 'database'
 
 const surveys = [
   {
+    id: 1,
     name: 'mood',
     questions: [
       { kind: QuestionType.YesNo, ask: "Did you exercise today?" },
@@ -13,6 +14,7 @@ const surveys = [
     ],
   },
   {
+    id: 2,
     name: 'food',
     questions: [
       { kind: QuestionType.YesNo, ask: "Do you like pizza?" },
@@ -27,7 +29,7 @@ export const seed = async () => {
   const db = await open()
   await db.clear('surveys')
   await Promise.all(
-    surveys.map(s => db.add('surveys', s))
+    surveys.map(s => db.put('surveys', s))
   )
 }
 
