@@ -17,12 +17,14 @@ export type Survey = {
   id?: number
   name: string
   questions: Array<Question>
+  created?: Date
 }
 
 export type Response = {
   id?: number
   survey: number
   answers: Array<Answer>
+  created?: Date
 }
 
 interface Schema extends DBSchema {
@@ -47,8 +49,8 @@ export const open = () => openDB<Schema>('mood-joural', 1, {
   }
 })
 
-export const addSurvey = (s: Survey) => open().then(db => db.add('surveys', s))
-export const addResponse = (r: Response) => open().then(db => db.add('responses', r))
+export const addSurvey = (s: Survey) => open().then(db => db.add('surveys', { ...s, created: new Date() }))
+export const addResponse = (r: Response) => open().then(db => db.add('responses', { ...r, created: new Date() }))
 export const getAllSurveys = () => open().then(db => db.getAll('surveys'))
 export const getSurvey = (sid: number) => open().then(db => db.get('surveys', sid))
 export const getSurveyResponses = (sid: number) => open().then(db => db.getAllFromIndex('responses', 'survey-id', IDBKeyRange.only(sid)))
