@@ -5,22 +5,14 @@ import { open, QuestionType } from 'database'
 const surveys = [
   {
     id: 1,
-    name: 'mood',
+    name: 'Daily Mood Journal',
     questions: [
-      { kind: QuestionType.YesNo, ask: "Did you exercise today?" },
       { kind: QuestionType.YesNo, ask: "Did you eat breakfast today?" },
-      { kind: QuestionType.YesNo, ask: "Did you finish a postit today?" },
+      { kind: QuestionType.YesNo, ask: "Did you go outside today?" },
+      { kind: QuestionType.YesNo, ask: "Did you exercise today?" },
+      { kind: QuestionType.YesNo, ask: "Did you talk to a friend today?" },
+      { kind: QuestionType.YesNo, ask: "Did you complete a chore today?" },
       { kind: QuestionType.Mood, ask: "How are you feeling today?" },
-    ],
-  },
-  {
-    id: 2,
-    name: 'food',
-    questions: [
-      { kind: QuestionType.YesNo, ask: "Do you like pizza?" },
-      { kind: QuestionType.YesNo, ask: "Do you like pasta?" },
-      { kind: QuestionType.YesNo, ask: "Do you like bread?" },
-      { kind: QuestionType.Mood, ask: "How do you feel about cheese?" },
     ],
   },
 ]
