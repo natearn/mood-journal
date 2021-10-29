@@ -27,7 +27,7 @@ const Survey = (props: SurveyProps) => {
     <Container maxWidth="md">
       <form>
         {survey?.questions.map((q) => (
-          <Field question={q} />
+          <Field question={q} key={q.ask} />
         ))}
       </form>
     </Container>
