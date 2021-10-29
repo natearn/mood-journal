@@ -4,15 +4,9 @@ import Container from '@mui/material/Container'
 
 import MoodRating from 'components/MoodRating'
 import YesNo from 'components/YesNo'
+import { useSurveyQuery } from 'queries'
 
 import * as db from 'database'
-const defaultSurvey = {
-  questions: [
-    { kind: db.QuestionType.YesNo, ask: "Did you eat breakfast?" },
-    { kind: db.QuestionType.YesNo, ask: "Did you exercise?" },
-    { kind: db.QuestionType.Mood, ask: "How do you feel?" },
-  ],
-}
 
 const Field = ({ question } : { question: db.Question }) => {
   switch (question.kind) {
@@ -25,8 +19,10 @@ const Field = ({ question } : { question: db.Question }) => {
   }
 }
 
-const Survey = (props: RouteComponentProps) => {
-  const survey = defaultSurvey;
+type SurveyProps = RouteComponentProps & { id?: string }
+const Survey = (props: SurveyProps) => {
+  const id = Number(props.id)
+  const { data: survey } = useSurveyQuery(id)
   return (
     <Container maxWidth="md">
       <form>
