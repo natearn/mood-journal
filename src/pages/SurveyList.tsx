@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from '@reach/router'
+import { RouteComponentProps, Link } from '@reach/router'
 import { Survey } from 'database'
 import { useAllSurveysQuery } from 'queries'
 
@@ -9,9 +9,9 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
-const Item = ({ name }: Survey) => (
+const Item = ({ name, id }: Survey) => (
   <ListItem key={name}>
-    <ListItemButton>
+    <ListItemButton component={Link} to={`/survey/${id}`}>
       <ListItemText primary={name} />
     </ListItemButton>
   </ListItem>
