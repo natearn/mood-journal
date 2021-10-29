@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 
 import MoodRating from 'components/MoodRating'
 import YesNo from 'components/YesNo'
-import { useSurveyQuery, useResponseMutation } from 'queries'
+import { useSurveyQuery, useResponseMutation, useLatestResponseQuery } from 'queries'
 
 import * as db from 'database'
 
@@ -25,6 +25,7 @@ type SurveyProps = RouteComponentProps & { id?: string }
 const Survey = (props: SurveyProps) => {
   const id = Number(props.id)
   const {data: survey} = useSurveyQuery(id)
+  const {data: latestResponse} = useLatestResponseQuery(id)
   const {mutate: addResponse} = useResponseMutation()
   const [response,setResponse] = useState<db.Response>({ survey: id, answers: [] })
 
@@ -47,6 +48,7 @@ const Survey = (props: SurveyProps) => {
           <Field question={q} key={q.ask} onChange={setAnswer(i)} />
         ))}
         <Button type="submit">Submit</Button>
+        <p>latest response: {latestResponse?.created.toString()}</p>
       </form>
     </Container>
   )
