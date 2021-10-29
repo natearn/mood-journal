@@ -19,7 +19,6 @@ const Item = ({ name }: Survey) => (
 
 const SurveyList = (props: RouteComponentProps) => {
   const { data: surveys } = useAllSurveysQuery()
-  console.info(surveys);
   return (
     <Container maxWidth="sm">
       <nav aria-label="survey list">
