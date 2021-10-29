@@ -20,7 +20,8 @@ const MoodsContainer = ({ value, ...rest }: { value: number }) => (
   <span {...rest}>{moods[value]}</span>
 )
 
-const MoodRating = ({ ask }: { ask: string }) => {
+type Props = { ask: string, onChange: (v: number | null) => void }
+const MoodRating = ({ ask, onChange }: Props) => {
   return (
     <fieldset>
       <Typography component="legend">{ask}</Typography>
@@ -28,6 +29,7 @@ const MoodRating = ({ ask }: { ask: string }) => {
         name="mood-rating"
         IconContainerComponent={MoodsContainer}
         highlightSelectedOnly
+        onChange={(e,v) => onChange(v)}
       />
     </fieldset>
   )
