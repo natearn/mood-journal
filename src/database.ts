@@ -1,4 +1,4 @@
-import { openDB, DBSchema } from 'idb'
+import { openDB, DBSchema, IDBPDatabase } from 'idb'
 
 export enum QuestionType {
   YesNo = "YesNo",
@@ -35,7 +35,9 @@ interface Schema extends DBSchema {
   responses: {
     key: number
     value: Response
-    indexes: { 'survey-id': number }
+    indexes: {
+      'survey': number
+    }
   }
 }
 
@@ -44,13 +46,21 @@ export const open = () => openDB<Schema>('mood-joural', 1, {
     if (oldVersion < 1) {
       db.createObjectStore('surveys', { keyPath: 'id', autoIncrement: true })
       const responses = db.createObjectStore('responses', { keyPath: 'id', autoIncrement: true })
-      responses.createIndex('survey-id','survey')
+      responses.createIndex('survey','survey')
     }
   }
 })
 
-export const addSurvey = (s: Survey) => open().then(db => db.add('surveys', { ...s, created: new Date() }))
-export const addResponse = (r: Response) => open().then(db => db.add('responses', { ...r, created: new Date() }))
-export const getAllSurveys = () => open().then(db => db.getAll('surveys'))
-export const getSurvey = (sid: number) => open().then(db => db.get('surveys', sid))
-export const getSurveyResponses = (sid: number) => open().then(db => db.getAllFromIndex('responses', 'survey-id', IDBKeyRange.only(sid)))
+export const run = async (f: (db: IDBPDatabase<Schema>) => any) => {
+  const db = await open()
+  const result = await f(db)
+  await db.close()
+  return result
+}
+
+export const addSurvey = (s: Survey) => run(db => db.add('surveys', { ...s, created: new Date() }))
+export const addResponse = (r: Response) => run(db => db.add('responses', { ...r, created: new Date() }))
+export const getAllSurveys = () => run(db => db.getAll('surveys'))
+export const getSurvey = (sid: number) => run(db => db.get('surveys', sid))
+export const getSurveyResponses = (sid: number) => run(db => db.getAllFromIndex('responses', 'survey', IDBKeyRange.only(sid)))
+export const getLatestResponse = (sid: number) => getSurveyResponses(sid).then(rs => rs.slice(-1)[0])

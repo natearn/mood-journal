@@ -43,7 +43,7 @@ const Survey = (props: SurveyProps) => {
   return (
     <Container maxWidth="md">
       <form onSubmit={submitResponse}>
-        {survey?.questions.map((q,i) => (
+        {survey?.questions.map((q: db.Question, i: number) => (
           <Field question={q} key={q.ask} onChange={setAnswer(i)} />
         ))}
         <Button type="submit">Submit</Button>
