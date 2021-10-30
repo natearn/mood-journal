@@ -6,7 +6,7 @@ import SurveyList from './SurveyList'
 
 const Pages = () => {
   return (
-    <Router basepath="/mood-journal">
+    <Router>
       <Survey path="/survey/:id" />
       <SurveyList default />
     </Router>
