@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/mood-journal/static/js/main.97bd064c.chunk.js",
+    "main.js.map": "/mood-journal/static/js/main.97bd064c.chunk.js.map",
+    "runtime-main.js": "/mood-journal/static/js/runtime-main.e1bb6ae8.js",
+    "runtime-main.js.map": "/mood-journal/static/js/runtime-main.e1bb6ae8.js.map",
+    "static/js/2.fe313957.chunk.js": "/mood-journal/static/js/2.fe313957.chunk.js",
+    "static/js/2.fe313957.chunk.js.map": "/mood-journal/static/js/2.fe313957.chunk.js.map",
+    "static/js/3.665d9143.chunk.js": "/mood-journal/static/js/3.665d9143.chunk.js",
+    "static/js/3.665d9143.chunk.js.map": "/mood-journal/static/js/3.665d9143.chunk.js.map",
+    "index.html": "/mood-journal/index.html",
+    "static/js/2.fe313957.chunk.js.LICENSE.txt": "/mood-journal/static/js/2.fe313957.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e1bb6ae8.js",
+    "static/js/2.fe313957.chunk.js",
+    "static/js/main.97bd064c.chunk.js"
+  ]
+}
