@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { open, QuestionType } from 'database'
+import { run, QuestionType, Database } from 'database'
 
 const surveys = [
   {
@@ -17,8 +17,7 @@ const surveys = [
   },
 ]
 
-export const seed = async () => {
-  const db = await open()
+export const seed = async (db: Database) => {
   await db.clear('surveys')
   await Promise.all(
     surveys.map(s => db.put('surveys', s))
@@ -28,7 +27,7 @@ export const seed = async () => {
 export const Seed = () => {
   const client = useQueryClient()
   const { mutate } = useMutation(
-    seed,
+    () => run(seed),
     { onSuccess: () => client.invalidateQueries() },
   )
   useEffect(() => { mutate() }, [mutate])

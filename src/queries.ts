@@ -25,6 +25,7 @@ export const useSurveyResponsesQuery = (id: number) => useQuery(
   () => db.getSurveyResponses(id),
   { placeholderData: [] },
 )
+
 export const useLatestResponseQuery = (id: number) => useQuery(
   ['responses',id,'latest'],
   () => db.getLatestResponse(id)

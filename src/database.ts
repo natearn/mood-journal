@@ -27,7 +27,7 @@ export type Response = {
   created?: Date
 }
 
-interface Schema extends DBSchema {
+type Schema = DBSchema & {
   surveys: {
     key: number
     value: Survey
@@ -41,7 +41,9 @@ interface Schema extends DBSchema {
   }
 }
 
-export const open = () => openDB<Schema>('mood-joural', 1, {
+export type Database = IDBPDatabase<Schema>
+
+const open = () => openDB<Schema>('mood-joural', 1, {
   upgrade(db, oldVersion) {
     if (oldVersion < 1) {
       db.createObjectStore('surveys', { keyPath: 'id', autoIncrement: true })
@@ -51,7 +53,7 @@ export const open = () => openDB<Schema>('mood-joural', 1, {
   }
 })
 
-export const run = async (f: (db: IDBPDatabase<Schema>) => any) => {
+export const run = async (f: (db: Database) => any) => {
   const db = await open()
   const result = await f(db)
   await db.close()
